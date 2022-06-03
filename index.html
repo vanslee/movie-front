@@ -59,9 +59,9 @@
                 <img src="images/user.png" alt="">
                 <span class="caret"></span>
             </div>
-            <div class="userlogin">
-                <a href="login.html" class=" notlogin">登录</a>
-                <div class="islogin nologin">
+            <div class="userlogin" id="App">
+                <a href="login.html" class=" notlogin" v-if="!token">登录</a>
+                <div class="islogin notlogin" v-if="token">
                     <a href="personal.html">个人中心</a>
                     <a href="index.html">退出</a>
                 </div>
@@ -979,6 +979,20 @@
     <script src="js/mock-min.js"></script>
     <script src="js/server.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/vue.js"></script>
+<script>
+    Vue.createApp({
+        setup(){
+        const token = Vue.ref()
+            Vue.onMounted(()=>{
+                token.value = localStorage.getItem('user')
+            })
+            return {
+                token
+            }
+        }
+    }).mount('#App')
+</script>
 </body>
 
 </html>

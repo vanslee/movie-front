@@ -12,21 +12,21 @@
 </head>
 
 <body>
-<div id = "App">
-<div id="login_wrap">
-    <div class="login ">
-        <div id="status">
-            <i style="top: 0">登录</i>
-        </div>
-        <span>
+<div id="App">
+    <div id="login_wrap">
+        <div class="login ">
+            <div id="status">
+                <i style="top: 0">登录</i>
+            </div>
+            <span>
             	<form action="post">
                         <p class="form">
                             <input type="text"
-                                        id="user"
-                                        name="username"
-                                        v-model="logInfo.username"
-                                        placeholder="用户名"
-                                        @blur="">
+                                   id="user"
+                                   name="username"
+                                   v-model="logInfo.username"
+                                   placeholder="用户名"
+                                   @blur="">
                         </p>
                         <p class="form">
                             <input
@@ -36,17 +36,17 @@
                                     v-model="logInfo.password"
                                     placeholder="密码">
                         </p>
-                        <input type="button"  value="登录" class="btn" style="margin-right: 20px;" @click="login">
+                        <input type="button" value="登录" class="btn" style="margin-right: 20px;" @click="login">
                         <input type="button" value="立即注册" class="btn" id="btn" onclick="tosign()">
                     </form>
                     <a href="#">忘记密码?</a>
             </span>
-    </div>
-    <div class="sign disnone">
-        <div id="status">
-            <i style="top: 0">注册</i>
         </div>
-        <span>
+        <div class="sign disnone">
+            <div id="status">
+                <i style="top: 0">注册</i>
+            </div>
+            <span>
             	<form action="post">
                         <p class="form"><input type="text" id="suser" placeholder="用户名"></p>
                         <p class="form"><input type="password" id="spasswd" placeholder="密码"></p>
@@ -55,46 +55,44 @@
                         <input type="button" value="注册" class="btn" id="btn" onclick="sign()">
                     </form>
             </span>
-    </div>
-    <div class="login-img">
-        <video src="media/login-video.mp4" autoplay controls></video>
-        <div class="img">
         </div>
-    </div>
+        <div class="login-img">
+            <video src="media/login-video.mp4" autoplay controls></video>
+            <div class="img">
+            </div>
+        </div>
 
-</div>
+    </div>
 </div>
 <script src="js/login.js"></script>
 <script src="js/mock-min.js"></script>
 <script src="js/server.js"></script>
 <script src="js/ajax.js"></script>
 <script src="js/axios.js"></script>
+<script src="js/element.js"></script>
 <script src="js/vue.js"></script>
+<script src="js/commons.js"></script>
 <script>
+
     Vue.createApp({
         setup() {
             const logInfo = Vue.reactive({
                 username: '',
                 password: '',
             })  //登录信息
-            const host = 'http://localhost:8080/'
             const login = () => {
-                axios({
-                    url: host+'user/login',
+                request({
+                    url: '/user/login',
                     method: 'post',
-                    data: logInfo,
+                    data: logInfo
                 }).then(resp => {
-                    console.dir(resp);
-                    //  if (confirm(resp.data.msg) == true){
-                    //     console.log("确认")
-                    // }else {
-                    //      console.log("取消")
-                    //  }
-                }).catch( err=> {
-                 alert("登录错误")
+                    if (resp.success === true) {
+                        location.href = 'http://localhost:8082'
+                        localStorage.setItem("user", resp.data.token)
+                    }
                 })
             }
-            // 页面加载
+
             Vue.onMounted(() => {
             })
             return {

@@ -17,6 +17,8 @@
     <script src="js/axios.js"></script>
     <!--    引入bootstrap-->
     <script src="js/bootstrap.js"></script>
+    <!--    封装的axios-->
+    <script src="js/commons.js"></script>
     <!--    <script src="js/ajax.js"></script>-->
     <!--    <script src="js/mock-min.js"></script>-->
     <!--    <script src="js/server.js"></script>-->
@@ -74,8 +76,8 @@
                 <span class="caret"></span>
             </div>
             <div class="userlogin">
-                <a href="login.html" class=" notlogin">登录</a>
-                <div class="islogin nologin">
+                <a href="login.html" class="notlogin" v-if="!token">登录</a>
+                <div class="islogin notlogin" v-if="token">
                     <a href="personal.html">个人中心</a>
                     <a href="index.html">退出</a>
                 </div>
@@ -108,10 +110,11 @@
             <div class="list-model" v-for="type in typeInfo">
                 <div class="name">
                     {{ type.typeinfo }}
-<!--                    {{typeInfo[0]}}-->
+                    <!--                    {{typeInfo[0]}}-->
                 </div>
                 <ul class="tags">
-                    <li class="tag-click" v-for="(types,index) in type.typeDetail" @click="changeClass(type['typeinfo'], types.id)"
+                    <li class="tag-click" v-for="(types,index) in type.typeDetail"
+                        @click="changeClass(type['typeinfo'], types.id)"
                         :class="{ active:  idList[type['typeinfo']] === types.id }">
                         <a href="javascript:;">{{ types.ttype }}</a>
                     </li>
@@ -248,12 +251,15 @@
             const pageSize = Vue.ref()
             // 电影类型
             const typeInfo = Vue.ref()
-
+            // token
+            const token = Vue.ref()
             const idList = Vue.reactive({})
             // 点击下一页
-            const previous = () => {}
+            const previous = () => {
+            }
             // 点击上一页
-            const next = () => {}
+            const next = () => {
+            }
             // changeClass 电影分类改变选中样式
             const changeClass = (typeinfo, tabId) => {
                 idList[typeinfo] = tabId;
@@ -263,35 +269,38 @@
             }
             // 根据类型查找数据
             const getMovieByType = (data) => {
-                    assembleList(data)
+                assembleList(data)
             }
             // 分页跳转
             const jump = (item) => {
                 assembleList(item)
             }
             // 电影列表渲染
-            const assembleList = (pageNum,data) => {
-                if (!pageNum) {pageNum = 1}
-                    axios({
-                        url: host+'movie/' + pageNum + '/8',
-                        method: 'get',
-                        // data: data
-                    }).then(resp => {
-                        hasNextPage.value = resp.data.data.hasNextPage
-                        hasPreviousPage.value = resp.data.data.hasPreviousPage
-                        pages.value = resp.data.data.pages
-                        list.value = (resp.data.data.list);
-                    })
+            const assembleList = (pageNum, data) => {
+                if (!pageNum) {
+                    pageNum = 1
+                }
+                request({
+                    url: host + 'movie/' + pageNum + '/8',
+                    method: 'get',
+                    // data: data
+                }).then(resp => {
+                    hasNextPage.value = resp.data.hasNextPage
+                    hasPreviousPage.value = resp.data.hasPreviousPage
+                    pages.value = resp.data.pages
+                    list.value = (resp.data.list);
+                })
             }
             const assembleType = () => {
-                axios({
-                    url: host+'type',
+                request({
+                    url: host + 'type',
                     method: 'get'
                 }).then(resp => {
                     typeInfo.value = resp.data.data
                 })
             }
             Vue.onMounted(() => {
+                token.value = localStorage.getItem('user')
                 assembleType()
                 assembleList()
             })
@@ -309,6 +318,7 @@
                 pageSize,
                 typeInfo,// 分类 '类型: 爱情,古装','区域','年代'
                 list,
+                token, // 判断用户是否登录
                 //方法
                 jump,
                 assembleType,
