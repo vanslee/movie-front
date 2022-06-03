@@ -1,56 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/clear.css">
     <link rel="stylesheet" href="css/login.css">
-    <title>猫眼电影</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="icon" href="images/title-lolg.png">
-
+    <title>猫眼电影</title>
 </head>
 
 <body>
-    <div id="login_wrap">
-        <div class="login ">
-            <div id="status">
-                <i style="top: 0">登录</i>
-            </div>
-            <span>
+<div id = "App">
+<div id="login_wrap">
+    <div class="login ">
+        <div id="status">
+            <i style="top: 0">登录</i>
+        </div>
+        <span>
             	<form action="post">
-                        <p class="form"><input type="text" id="user" placeholder="用户名"></p>
-                        <p class="form"><input type="password" id="passwd" placeholder="密码"></p>
-                        <input type="button" value="登录" class="btn"  style="margin-right: 20px;" onclick="login()">
+                        <p class="form">
+                            <input type="text"
+                                        id="user"
+                                        name="username"
+                                        v-model="logInfo.username"
+                                        placeholder="用户名"
+                                        @blur="">
+                        </p>
+                        <p class="form">
+                            <input
+                                    type="password"
+                                    id="passwd"
+                                    name="password"
+                                    v-model="logInfo.password"
+                                    placeholder="密码">
+                        </p>
+                        <input type="button"  value="登录" class="btn" style="margin-right: 20px;" @click="login">
                         <input type="button" value="立即注册" class="btn" id="btn" onclick="tosign()">
                     </form>
                     <a href="#">忘记密码?</a>
             </span>
+    </div>
+    <div class="sign disnone">
+        <div id="status">
+            <i style="top: 0">注册</i>
         </div>
-        <div class="sign disnone">
-            <div id="status">
-                <i style="top: 0">注册</i>
-            </div>
-            <span>
+        <span>
             	<form action="post">
                         <p class="form"><input type="text" id="suser" placeholder="用户名"></p>
                         <p class="form"><input type="password" id="spasswd" placeholder="密码"></p>
                         <p class="form"><input type="password" id="spasswdtwo" placeholder="再次输入密码"></p>
-                        <input type="button" value="立即登录" class="btn"   style="margin-right: 20px;" onclick="tologin()">
+                        <input type="button" value="立即登录" class="btn" style="margin-right: 20px;" onclick="tologin()">
                         <input type="button" value="注册" class="btn" id="btn" onclick="sign()">
                     </form>
             </span>
-        </div>
-        <div class="login-img">
-            <video src="media/login-video.mp4" autoplay controls></video>
-            <div class="img">
-            </div>
+    </div>
+    <div class="login-img">
+        <video src="media/login-video.mp4" autoplay controls></video>
+        <div class="img">
         </div>
     </div>
-    <script src="js/login.js"></script>
-    <script src="js/mock-min.js"></script>
-    <script src="js/server.js"></script>
-    <script src="js/ajax.js"></script>
+
+</div>
+</div>
+<script src="js/login.js"></script>
+<script src="js/mock-min.js"></script>
+<script src="js/server.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/axios.js"></script>
+<script src="js/vue.js"></script>
+<script>
+    Vue.createApp({
+        setup() {
+            const logInfo = Vue.reactive({
+                username: '',
+                password: '',
+            })  //登录信息
+            const host = 'http://localhost:8080/'
+            const login = () => {
+                axios({
+                    url: host+'user/login',
+                    method: 'post',
+                    data: logInfo,
+                }).then(resp => {
+                    console.dir(resp);
+                    //  if (confirm(resp.data.msg) == true){
+                    //     console.log("确认")
+                    // }else {
+                    //      console.log("取消")
+                    //  }
+                }).catch( err=> {
+                 alert("登录错误")
+                })
+            }
+            // 页面加载
+            Vue.onMounted(() => {
+            })
+            return {
+                //变量
+                logInfo, //登录信息
+                //方法
+                login, //登录按钮触发方法
+            }
+        }
+    }).mount('#App')
+</script>
 </body>
 
 </html>

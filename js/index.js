@@ -22,7 +22,7 @@ var size = [
     { "top": 100, "left": 500, "width": 600, "height": 300, "zIndex": 0, "opacity": 0 },
     { "top": 100, "left": 8, "width": 600, "height": 300, "zIndex": 0, "opacity": 70 },
     { "top": 100, "left": 1000, "width": 600, "height": 300, "zIndex": 0, "opacity": 70 },
-    { "top": 0, "left": 105, "width": 1700, "height": 520, "zIndex": 4, "opacity": 100 },
+    { "top": 0, "left": 105, "width": 1300, "height": 500, "zIndex": 4, "opacity": 100 },
     { "top": 100, "left": 1300, "width": 600, "height": 300, "zIndex": 0, "opacity": 70 },
 ];
 var imgSum = imgArr.length;

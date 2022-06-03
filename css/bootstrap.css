@@ -4785,6 +4785,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #777777;
 }
 .pagination {
+  display: flex;
+  justify-content: center;
   display: inline-block;
   padding-left: 0;
   margin: 20px 0;
@@ -5101,6 +5103,7 @@ a.thumbnail.active {
   color: #333333;
 }
 .alert {
+  width: 15%;
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;

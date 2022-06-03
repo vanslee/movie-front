@@ -7,6 +7,7 @@
   margin: 80px 0 40px 0;
 }
 .movies-nav a {
+  text-decoration: none;
   display: block;
   font-size: 16px;
   height: 60px;
@@ -15,6 +16,7 @@
   color: #999;
 }
 .movies-nav a:hover {
+  text-decoration: none;
   color: #ffffff;
 }
 .movies-nav .nav-body {
@@ -78,20 +80,24 @@
   margin: 0 10px;
 }
 .movie-list .list-body .list-model .tags .tag-click a {
+  text-decoration: none;
   height: 30px;
   line-height: 20px;
   font-size: 14px;
 }
 .movie-list .list-body .list-model .tags .tag-click a:hover {
+  text-decoration: none;
   color: #f34d41;
 }
 .movie-list .list-body .list-model .tags .active {
   background: #f34d41;
 }
 .movie-list .list-body .list-model .tags .active a {
+  text-decoration: none;
   color: #fff;
 }
 .movie-list .list-body .list-model .tags .active a:hover {
+  text-decoration: none;
   color: #fff;
 }
 .movie-list .list-body .list-model:nth-last-child(1) {
@@ -131,19 +137,10 @@
   position: relative;
 }
 .movies-body ul .othermovie-model a p {
-
-
-  white-space: nowrap;
+  text-decoration: none;
   height: 30px;
   line-height: 30px;
   font-size: 16px;
-}
-.movies-body ul .othermovie-model a>p {
-  overflow: hidden;
-  height: 30px;
-  line-height: 30px;
-  font-size: 16px;
-  width: 40px;
 }
 .movies-body ul .othermovie-model i {
   color: #ffb400;
